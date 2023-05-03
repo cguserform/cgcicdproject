@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:api-template="http://www.mulesoft.org/schema/mule/api-template"
+	xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd 
+http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd
+http://www.mulesoft.org/schema/mule/api-template http://www.mulesoft.org/schema/mule/api-template/current/mule-api-template.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+
+<!-- Secure properties config settings -->
+	<http:listener-config name="s-loops-demo-api-httpListenerConfig">
+        <http:listener-connection host="${http.host}" port="${http.port}" readTimeout="${http.timeout}"/>
+    </http:listener-config>
+    <apikit:config name="s-loops-demo-api-config" api="resource::6bbca401-2e74-4462-8866-82d614d6ab81:s-loops-demo-api:1.0.3:raml:zip:s-loops-demo-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<api-gateway:autodiscovery apiId="${environment.autodiscover-id}" doc:name="API Autodiscovery" doc:id="611768ce-922a-4efb-a6a7-27fd84827d77" flowRef="s-loops-demo-api-main" ignoreBasePath="true"/>
+	<configuration-properties doc:name="Configuration properties" doc:id="40b777ff-6593-4f6e-b2ed-018615e85018" file="config/secure/${mule-env}-config.yaml" />
+	<global-property doc:name="Global Property" doc:id="ad093cb7-a6aa-459c-b197-cce4164b19a1" name="mule-env" value="DEV" />
+</mule>

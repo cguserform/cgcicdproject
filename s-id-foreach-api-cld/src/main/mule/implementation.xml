@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="loop" doc:id="df46a77c-641c-45f2-a81a-81637feb558f" >
+		<foreach doc:name="For Each" doc:id="6b32fe1d-fb50-42da-814d-06b0208d6501" collection="#[payload]">
+			<ee:transform doc:name="Multiply x&amp;y" doc:id="38ac26f1-97cf-4f3c-bb75-475ad035ac93" >
+				<ee:message >
+					<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	x: payload.x as Number,
+	y: payload.y as Number,
+	result: payload.x as Number * payload.y as Number
+}]]></ee:set-payload>
+				</ee:message>
+			</ee:transform>
+			<set-variable value="#[output application/json --- vars.result + payload]" doc:name="Append to result" doc:id="7d60e076-c500-4abd-9492-9fb6aebc9eed" variableName="result"/>
+		</foreach>
+		<set-payload value="#[vars.result]" doc:name="Set Payload" doc:id="e26cb048-0ea0-4333-9f93-fa5a8446bf86" />
+	</flow>
+</mule>

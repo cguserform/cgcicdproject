@@ -1,0 +1,18 @@
+# Instruction how to use api template:
+
+# Step 1: remove example components below that you do not need for your api (i.e. if you don't need activemq, delete the whole section).
+# Step 2: within required sections delete all fields that you do not need for your api. These fields are marked with #REMOVE ME (i.e. if you won't use a TOPIC in activemq, delete the topic-example)
+# Step 3: configure all fields marked with # CONFIGURE ME to the needs of your particular api. (for instance, if you need to connect to s-ods-api, replace s-template-api with s-ods-api)
+
+#####################################################################################################################################################
+# environment - mandatory (do not delete)
+environment:
+  autodiscover-id: "17649808" # CONFIGURE ME
+  console: 
+    initial: "started"
+#####################################################################################################################################################
+http:
+  host: "0.0.0.0"
+  port: "8081"
+  timeout: "30000"
+  path: "/api/*"

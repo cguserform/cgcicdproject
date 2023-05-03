@@ -1,0 +1,19 @@
+api:
+  name: "p-template-api"
+  domain: ""
+  subdomain: "template"
+  layer: "p"
+  version:
+    major: "1"
+  path: "/${secure::api.domain}/${secure::api.subdomain}/${secure::api.layer}/v${secure::api.version.major}"
+
+https:
+  host: "0.0.0.0"
+  port: "8082"
+
+keystore:
+  password: "" #configure here
+  key:
+    password: "" #configure here
+  path: "keystore.jks"
+  alias: "" #configure here
